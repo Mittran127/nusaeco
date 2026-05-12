@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NusaEco — Procurement Sustainability Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Syne:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest:     #1c3a2e;
+  --forest-mid: #2d5c47;
+  --leaf:       #3d8c5e;
+  --mint:       #7ec8a0;
+  --mist:       #e8f5ee;
+  --parchment:  #f9f7f2;
+  --cream:      #fdfcf9;
+  --ink:        #1a1f1c;
+  --ink-mid:    #3d4a42;
+  --ink-muted:  #6b7a70;
+  --ink-faint:  #a8b5ad;
+  --border:     #dde8e1;
+  --border-dk:  #c4d4cb;
+  --amber:      #c47c2b;
+  --amber-bg:   #fdf3e3;
+  --red:        #b84040;
+  --red-bg:     #fdf0f0;
+  --blue:       #2d6b9e;
+  --blue-bg:    #eff5fb;
+  --serif:      'Cormorant Garamond', Georgia, serif;
+  --sans:       'Syne', system-ui, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--parchment); color: var(--ink); font-family: var(--sans); font-size: 13px; min-height: 100vh; display: flex; flex-direction: column; }
+
+/* ── Landing ── */
+#landing { min-height: 100vh; display: flex; flex-direction: column; }
+.l-nav { padding: 22px 48px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); background: var(--cream); }
+.l-logo { display: flex; align-items: center; gap: 10px; }
+.l-leaf { width: 30px; height: 30px; background: var(--forest); border-radius: 50% 50% 50% 8px; display: flex; align-items: center; justify-content: center; color: var(--mint); font-size: 14px; }
+.l-name { font-family: var(--serif); font-size: 24px; font-weight: 300; color: var(--forest); letter-spacing: -0.01em; }
+.l-badge { font-size: 10px; background: var(--mist); color: var(--forest-mid); border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px; letter-spacing: 0.06em; font-weight: 500; }
+.l-hero { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 0; max-width: 1080px; margin: 0 auto; padding: 56px 48px; align-items: start; width: 100%; }
+.l-copy { padding-right: 56px; padding-top: 16px; }
+.l-eye { font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--leaf); font-weight: 500; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+.l-eye::before { content: ''; width: 20px; height: 1px; background: var(--leaf); }
+.l-h1 { font-family: var(--serif); font-size: 48px; line-height: 1.1; color: var(--forest); margin-bottom: 20px; font-weight: 300; letter-spacing: -0.02em; }
+.l-h1 em { font-style: italic; color: var(--leaf); }
+.l-body { font-size: 14px; color: var(--ink-muted); line-height: 1.8; margin-bottom: 28px; font-weight: 300; }
+.l-defra-callout { background: var(--blue-bg); border: 1px solid #c5daf0; border-radius: 8px; padding: 12px 14px; margin-bottom: 28px; display: flex; gap: 10px; align-items: flex-start; }
+.l-defra-icon { font-size: 16px; color: var(--blue); flex-shrink: 0; margin-top: 1px; }
+.l-defra-text { font-size: 11px; color: var(--blue); line-height: 1.6; font-weight: 400; }
+.l-defra-text strong { font-weight: 500; display: block; margin-bottom: 2px; }
+
+/* ── Upload card ── */
+.u-card { background: var(--cream); border: 1px solid var(--border); border-radius: 14px; padding: 28px; box-shadow: 0 2px 20px rgba(28,58,46,.06); }
+.u-title { font-family: var(--serif); font-size: 20px; font-weight: 300; color: var(--forest); margin-bottom: 4px; }
+.u-sub { font-size: 11px; color: var(--ink-faint); margin-bottom: 20px; font-weight: 300; }
+.u-drop { border: 1.5px dashed var(--border-dk); border-radius: 10px; padding: 28px 16px; text-align: center; cursor: pointer; transition: all .2s; background: var(--parchment); margin-bottom: 16px; }
+.u-drop:hover, .u-drop.over { border-color: var(--leaf); background: var(--mist); }
+.u-drop input { display: none; }
+.u-icon { width: 40px; height: 40px; background: var(--mist); border-radius: 8px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 18px; color: var(--leaf); transition: background .2s; }
+.u-drop:hover .u-icon { background: var(--border); }
+.u-dt { font-size: 13px; font-weight: 500; color: var(--ink-mid); margin-bottom: 3px; }
+.u-ds { font-size: 11px; color: var(--ink-faint); font-weight: 300; }
+.u-hint { background: var(--mist); border-radius: 7px; padding: 10px 12px; margin-bottom: 16px; }
+.u-hint-t { font-size: 10px; font-weight: 500; color: var(--forest-mid); margin-bottom: 5px; letter-spacing: .05em; text-transform: uppercase; }
+.u-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 3px 10px; }
+.u-field { font-size: 11px; color: var(--ink-muted); display: flex; align-items: center; gap: 4px; font-weight: 300; }
+.u-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--mint); flex-shrink: 0; }
+.u-btn { width: 100%; background: var(--forest); color: var(--cream); border: none; border-radius: 7px; padding: 12px 18px; font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: .05em; cursor: pointer; transition: background .2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.u-btn:hover:not(:disabled) { background: var(--forest-mid); }
+.u-btn:disabled { opacity: .4; cursor: not-allowed; }
+.l-footer { border-top: 1px solid var(--border); background: var(--cream); padding: 16px 48px; display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
+.l-feat { display: flex; align-items: center; gap: 7px; font-size: 11px; color: var(--ink-muted); font-weight: 300; }
+.l-feat-i { width: 24px; height: 24px; background: var(--mist); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: var(--leaf); }
+.disclaimer { background: var(--amber-bg); border-top: 1px solid #f0d5b0; padding: 12px 48px; display: flex; align-items: flex-start; gap: 10px; }
+.disc-icon { font-size: 14px; color: var(--amber); flex-shrink: 0; margin-top: 1px; }
+.disc-text { font-size: 11px; color: var(--amber); line-height: 1.6; font-weight: 300; }
+.disc-text strong { font-weight: 500; }
+.a-beta { font-size: 10px; background: var(--amber-bg); color: var(--amber); border: 1px solid #f0d5b0; padding: 3px 8px; border-radius: 20px; font-weight: 500; }
+.usage-bar-wrap { padding: 8px 14px; border-bottom: 1px solid var(--border); background: var(--cream); display: none; }
+.usage-bar-label { font-size: 10px; color: var(--ink-faint); margin-bottom: 4px; display: flex; justify-content: space-between; }
+.usage-track { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.usage-fill { height: 100%; border-radius: 2px; background: var(--leaf); transition: width .4s ease; }
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 200; padding: 24px; }
+.modal-box { background: var(--cream); border-radius: 14px; padding: 32px; max-width: 420px; width: 100%; box-shadow: 0 8px 40px rgba(0,0,0,0.15); }
+.modal-icon { font-size: 32px; margin-bottom: 12px; }
+.modal-title { font-family: var(--serif); font-size: 22px; color: var(--forest); margin-bottom: 8px; font-weight: 300; }
+.modal-body { font-size: 13px; color: var(--ink-muted); line-height: 1.7; margin-bottom: 20px; font-weight: 300; }
+.modal-reset { font-size: 11px; color: var(--ink-faint); margin-bottom: 20px; }
+.modal-cta { width: 100%; background: var(--forest); color: var(--cream); border: none; border-radius: 8px; padding: 12px; font-family: var(--sans); font-size: 13px; font-weight: 500; cursor: pointer; margin-bottom: 8px; transition: background .15s; }
+.modal-cta:hover { background: var(--forest-mid); }
+.modal-dismiss { width: 100%; background: transparent; color: var(--ink-faint); border: 1px solid var(--border); border-radius: 8px; padding: 10px; font-family: var(--sans); font-size: 12px; cursor: pointer; transition: all .15s; }
+.modal-dismiss:hover { border-color: var(--border-dk); color: var(--ink-muted); }
+
+/* ── App ── */
+#app { display: none; flex-direction: column; height: 100vh; overflow: hidden; }
+.a-header { height: 52px; background: var(--cream); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 20px; gap: 14px; flex-shrink: 0; }
+.a-logo { display: flex; align-items: center; gap: 7px; }
+.a-leaf { width: 24px; height: 24px; background: var(--forest); border-radius: 50% 50% 50% 6px; display: flex; align-items: center; justify-content: center; color: var(--mint); font-size: 12px; }
+.a-name { font-family: var(--serif); font-size: 19px; font-weight: 300; color: var(--forest); }
+.a-pill { font-size: 10px; background: var(--mist); color: var(--forest-mid); border: 1px solid var(--border); padding: 3px 9px; border-radius: 20px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
+.a-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--leaf); }
+.a-defra-pill { font-size: 10px; background: var(--blue-bg); color: var(--blue); border: 1px solid #c5daf0; padding: 3px 9px; border-radius: 20px; font-weight: 500; }
+.a-right { margin-left: auto; }
+.a-new { font-size: 11px; background: transparent; border: 1px solid var(--border-dk); color: var(--ink-muted); padding: 4px 10px; border-radius: 5px; cursor: pointer; font-family: var(--sans); transition: all .15s; }
+.a-new:hover { border-color: var(--leaf); color: var(--forest); }
+.a-body { display: grid; grid-template-columns: 252px 1fr 272px; flex: 1; overflow: hidden; }
+
+/* ── Left panel ── */
+.p-left { border-right: 1px solid var(--border); background: var(--cream); display: flex; flex-direction: column; overflow: hidden; }
+.p-sec { padding: 14px; border-bottom: 1px solid var(--border); }
+.p-lbl { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-faint); font-weight: 500; margin-bottom: 9px; }
+.s-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+.s-card { background: var(--parchment); border: 1px solid var(--border); border-radius: 7px; padding: 7px 9px; }
+.s-val { font-family: var(--serif); font-size: 19px; color: var(--forest); letter-spacing: -0.02em; font-weight: 300; }
+.s-lbl { font-size: 9px; color: var(--ink-faint); margin-top: 1px; font-weight: 300; }
+.cov { margin-bottom: 7px; }
+.cov-top { display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-muted); margin-bottom: 3px; }
+.cov-track { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.cov-fill { height: 100%; border-radius: 2px; background: var(--leaf); transition: width .6s ease; }
+.starters { flex: 1; overflow-y: auto; padding: 10px; }
+.starters::-webkit-scrollbar { width: 2px; }
+.starters::-webkit-scrollbar-thumb { background: var(--border-dk); border-radius: 2px; }
+.st { display: block; width: 100%; text-align: left; background: transparent; border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-family: var(--sans); font-size: 11px; color: var(--ink-muted); cursor: pointer; margin-bottom: 5px; transition: all .15s; line-height: 1.5; font-weight: 300; }
+.st:hover { border-color: var(--leaf); color: var(--forest); background: var(--mist); }
+.st-arr { color: var(--leaf); margin-right: 3px; font-size: 10px; }
+
+/* ── Chat ── */
+.p-chat { display: flex; flex-direction: column; overflow: hidden; background: var(--parchment); }
+.msgs { flex: 1; overflow-y: auto; padding: 22px; display: flex; flex-direction: column; gap: 16px; scroll-behavior: smooth; }
+.msgs::-webkit-scrollbar { width: 3px; }
+.msgs::-webkit-scrollbar-thumb { background: var(--border-dk); border-radius: 2px; }
+.welcome { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 50px 36px; text-align: center; }
+.w-leaf { width: 52px; height: 52px; background: var(--mist); border-radius: 50% 50% 50% 13px; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--leaf); margin-bottom: 4px; }
+.w-title { font-family: var(--serif); font-size: 22px; color: var(--forest); font-style: italic; font-weight: 300; }
+.w-sub { font-size: 12px; color: var(--ink-muted); line-height: 1.7; max-width: 300px; font-weight: 300; }
+.msg { animation: rise .2s ease; display: flex; flex-direction: column; gap: 4px; }
+@keyframes rise { from { opacity:0;transform:translateY(7px); } to { opacity:1;transform:translateY(0); } }
+.msg-role { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; font-weight: 500; }
+.msg-role.user { color: var(--leaf); }
+.msg-role.ai { color: var(--ink-faint); }
+.msg-body { font-size: 13px; line-height: 1.8; padding: 11px 15px; border-radius: 9px; white-space: pre-wrap; word-break: break-word; font-weight: 300; }
+.msg.user .msg-body { background: var(--forest); color: #cfe8da; border-bottom-right-radius: 3px; align-self: flex-end; max-width: 88%; }
+.msg.ai .msg-body { background: var(--cream); color: var(--ink); border: 1px solid var(--border); border-bottom-left-radius: 3px; }
+.typing-w { display: flex; flex-direction: column; gap: 4px; }
+.typing { display: flex; gap: 4px; align-items: center; padding: 11px 15px; background: var(--cream); border: 1px solid var(--border); border-radius: 9px; border-bottom-left-radius: 3px; width: fit-content; }
+.td { width: 5px; height: 5px; border-radius: 50%; background: var(--border-dk); animation: blink 1.2s infinite; }
+.td:nth-child(2) { animation-delay: .2s; }
+.td:nth-child(3) { animation-delay: .4s; }
+@keyframes blink { 0%,80%,100%{opacity:.25;transform:scale(.85)} 40%{opacity:1;transform:scale(1)} }
+.i-bar { border-top: 1px solid var(--border); padding: 12px 18px; display: flex; gap: 9px; align-items: flex-end; background: var(--cream); flex-shrink: 0; }
+.i-in { flex: 1; background: var(--parchment); border: 1px solid var(--border-dk); border-radius: 7px; padding: 9px 12px; font-family: var(--sans); font-size: 12px; color: var(--ink); outline: none; resize: none; min-height: 38px; max-height: 110px; line-height: 1.5; font-weight: 300; transition: border-color .15s; }
+.i-in:focus { border-color: var(--leaf); }
+.i-in::placeholder { color: var(--ink-faint); }
+.i-btn { width: 38px; height: 38px; background: var(--forest); color: var(--cream); border: none; border-radius: 7px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background .15s; }
+.i-btn:hover:not(:disabled) { background: var(--forest-mid); }
+.i-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+/* ── Right panel ── */
+.p-right { border-left: 1px solid var(--border); background: var(--cream); overflow-y: auto; }
+.p-right::-webkit-scrollbar { width: 2px; }
+.p-right::-webkit-scrollbar-thumb { background: var(--border-dk); border-radius: 2px; }
+.r-sec { padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.r-lbl { font-size: 9px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint); font-weight: 500; margin-bottom: 8px; }
+.r-empty { padding: 40px 20px; text-align: center; font-size: 11px; color: var(--ink-faint); line-height: 1.7; font-weight: 300; }
+.sup-card { background: var(--parchment); border: 1px solid var(--border); border-radius: 7px; padding: 9px 11px; margin-bottom: 6px; }
+.sup-name { font-size: 11px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+.sup-sect { font-size: 10px; color: var(--ink-faint); font-weight: 300; margin-bottom: 5px; }
+.sup-row { display: flex; justify-content: space-between; font-size: 10px; color: var(--ink-muted); padding: 2px 0; }
+.sup-val { color: var(--ink); font-weight: 400; }
+.bdg { display: inline-flex; font-size: 9px; padding: 2px 5px; border-radius: 3px; font-weight: 500; letter-spacing: .03em; }
+.bg { background: #e6f5ec; color: #2a6b42; border: 1px solid #c0deca; }
+.ba { background: var(--amber-bg); color: var(--amber); border: 1px solid #f0d5b0; }
+.br { background: var(--red-bg); color: var(--red); border: 1px solid #f0c8c8; }
+.bb { background: var(--blue-bg); color: var(--blue); border: 1px solid #c5daf0; }
+.defra-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+.defra-table th { padding: 5px 8px; text-align: left; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); font-weight: 500; background: var(--parchment); border-bottom: 1px solid var(--border); }
+.defra-table td { padding: 5px 8px; color: var(--ink-muted); border-bottom: 1px solid var(--border); }
+.defra-table td:last-child { color: var(--forest); font-weight: 500; text-align: right; }
+.defra-table tr:last-child td { border-bottom: none; }
+.defra-table tr:hover td { background: var(--mist); }
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(50px); background: var(--forest); color: var(--cream); padding: 9px 18px; border-radius: 7px; font-size: 12px; opacity: 0; transition: all .3s; pointer-events: none; z-index: 100; white-space: nowrap; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 880px) {
+  .l-hero { grid-template-columns: 1fr; padding: 36px 24px; }
+  .l-copy { padding-right: 0; margin-bottom: 28px; }
+  .l-h1 { font-size: 36px; }
+  .a-body { grid-template-columns: 1fr; }
+  .p-left, .p-right { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════ LANDING ════════ -->
+<div id="landing">
+  <nav class="l-nav">
+    <div class="l-logo">
+      <div class="l-leaf">✦</div>
+      <div>
+        <div class="l-name">NusaEco</div>
+      </div>
+    </div>
+    <div class="l-badge">Scope 3 · GHG Protocol · CSRD · DEFRA EEIO 2023</div>
+  </nav>
+
+  <div class="l-hero">
+    <div class="l-copy">
+      <div class="l-eye">For sustainability-led procurement</div>
+      <h1 class="l-h1">Your supplier data,<br><em>answered instantly</em></h1>
+      <p class="l-body">Upload your supplier emissions CSV and ask anything in plain English. NusaEco analyses Scope 3 exposure, fills gaps with auditable DEFRA estimates, and surfaces exactly who to engage first.</p>
+      <div class="l-defra-callout">
+        <div class="l-defra-icon">◈</div>
+        <div class="l-defra-text">
+          <strong>DEFRA EEIO 2023 factors embedded</strong>
+          When a supplier hasn't reported emissions, NusaEco estimates using the UK Government's official supply chain emission factors (DESNZ/DEFRA 2023) — citing the exact factor and calculation so every number is auditable. GHG Protocol Tier 3 spend-based method.
+        </div>
+      </div>
+    </div>
+
+    <div class="u-card">
+      <div class="u-title">Start with your data</div>
+      <div class="u-sub">Upload a CSV — no account needed</div>
+      <div class="u-drop" id="dropZone" onclick="document.getElementById('fIn').click()"
+           ondragover="dv(event)" ondragleave="dl()" ondrop="df(event)">
+        <input type="file" id="fIn" accept=".csv" onchange="loadF(this.files[0])">
+        <div class="u-icon" id="uIcon">↑</div>
+        <div class="u-dt" id="uTitle">Drop your CSV here</div>
+        <div class="u-ds" id="uSub">or click to browse · .csv files only</div>
+      </div>
+      <div class="u-hint">
+        <div class="u-hint-t">Recommended columns</div>
+        <div class="u-fields">
+          <div class="u-field"><div class="u-dot"></div>supplier_name</div>
+          <div class="u-field"><div class="u-dot"></div>annual_spend_gbp</div>
+          <div class="u-field"><div class="u-dot"></div>scope1_tco2e</div>
+          <div class="u-field"><div class="u-dot"></div>scope2_tco2e</div>
+          <div class="u-field"><div class="u-dot"></div>sector</div>
+          <div class="u-field"><div class="u-dot"></div>questionnaire_responded</div>
+          <div class="u-field"><div class="u-dot"></div>data_quality_score</div>
+          <div class="u-field"><div class="u-dot"></div>has_reduction_target</div>
+        </div>
+      </div>
+      <button class="u-btn" id="startBtn" disabled onclick="launchApp()">
+        <span id="startLbl">Upload a CSV to continue</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="l-footer">
+    <div class="l-feat"><div class="l-feat-i">◎</div>GHG Protocol aligned</div>
+    <div class="l-feat"><div class="l-feat-i">▣</div>CSRD Category 1 ready</div>
+    <div class="l-feat"><div class="l-feat-i">◈</div>DEFRA EEIO 2023 gap-fill</div>
+    <div class="l-feat"><div class="l-feat-i">◇</div>Auditable calculations</div>
+    <div class="l-feat"><div class="l-feat-i">✦</div>No data stored</div>
+  </div>
+  <div class="disclaimer">
+    <div class="disc-icon">⚠</div>
+    <div class="disc-text">
+      <strong>Beta tool — indicative estimates only.</strong>
+      DEFRA EEIO spend-based estimates are directional (GHG Protocol Tier 3) and must be replaced with supplier-reported activity data before formal CSRD or sustainability report submission. Results should be verified by a qualified sustainability professional before use in board reports or regulatory filings. Do not upload data classified as confidential under your organisation's data policy — your CSV is processed via Anthropic's API and is not stored or used for AI training, but you remain responsible for compliance with your own data governance policies.
+    </div>
+  </div>
+</div>
+
+<!-- ════════ APP ════════ -->
+<div id="app">
+  <div class="a-header">
+    <div class="a-logo">
+      <div class="a-leaf">✦</div>
+      <div class="a-name">NusaEco</div>
+    </div>
+    <div class="a-pill"><div class="a-dot"></div><span id="dsLbl">Dataset loaded</span></div>
+    <div class="a-defra-pill">DEFRA EEIO 2023</div>
+    <div class="a-beta">Beta</div>
+    <div class="a-right"><button class="a-new" onclick="newDs()">↩ New dataset</button></div>
+  </div>
+  <!-- Usage bar — shown after first question -->
+  <div class="usage-bar-wrap" id="usageBarWrap">
+    <div class="usage-bar-label">
+      <span>Free questions used today</span>
+      <span id="usageText">—</span>
+    </div>
+    <div class="usage-track"><div class="usage-fill" id="usageFill" style="width:0%"></div></div>
+  </div>
+
+  <div class="a-body">
+    <!-- Left -->
+    <div class="p-left">
+      <div class="p-sec">
+        <div class="p-lbl">Portfolio overview</div>
+        <div class="s-grid">
+          <div class="s-card"><div class="s-val" id="sN">—</div><div class="s-lbl">Suppliers</div></div>
+          <div class="s-card"><div class="s-val" id="sS">—</div><div class="s-lbl">Total spend</div></div>
+          <div class="s-card"><div class="s-val" id="sR">—</div><div class="s-lbl">Response rate</div></div>
+          <div class="s-card"><div class="s-val" id="sQ">—</div><div class="s-lbl">Avg quality</div></div>
+        </div>
+      </div>
+      <div class="p-sec">
+        <div class="p-lbl">Data coverage</div>
+        <div class="cov"><div class="cov-top"><span>Response rate</span><span id="cvR">—</span></div><div class="cov-track"><div class="cov-fill" id="cfR" style="width:0%"></div></div></div>
+        <div class="cov"><div class="cov-top"><span>Emissions data</span><span id="cvD">—</span></div><div class="cov-track"><div class="cov-fill" id="cfD" style="width:0%;background:var(--amber)"></div></div></div>
+        <div class="cov" style="margin-bottom:0"><div class="cov-top"><span>Third-party verified</span><span id="cvV">—</span></div><div class="cov-track"><div class="cov-fill" id="cfV" style="width:0%;background:var(--mint)"></div></div></div>
+      </div>
+      <div class="starters">
+        <div class="p-lbl" style="margin-bottom:7px">Ask NusaEco</div>
+        <button class="st" onclick="ask('Which suppliers account for 80% of my total Scope 3? List them with tCO2e amounts and spend.')"><span class="st-arr">→</span>Which suppliers drive 80% of Scope 3?</button>
+        <button class="st" onclick="ask('For every supplier with no emissions data, estimate their Scope 3 using DEFRA EEIO 2023 factors based on their sector and annual spend. Show the factor used and the calculation for each.')"><span class="st-arr">→</span>Estimate gaps using DEFRA EEIO factors</button>
+        <button class="st" onclick="ask('Which suppliers have not responded to the questionnaire? List them with spend and days since questionnaire was sent.')"><span class="st-arr">→</span>Who hasn't responded — spend at risk?</button>
+        <button class="st" onclick="ask('What is my total Scope 3 Category 1 footprint? Include both reported emissions and DEFRA-estimated gaps. Show the split between reported vs estimated.')"><span class="st-arr">→</span>Total Scope 3 footprint incl. DEFRA estimates</button>
+        <button class="st" onclick="ask('Give me a CSRD readiness summary — which suppliers are compliant, partially compliant, or not compliant with Scope 3 Category 1 reporting requirements?')"><span class="st-arr">→</span>CSRD readiness summary</button>
+        <button class="st" onclick="ask('Which suppliers have low data quality scores but high annual spend? Rank by priority for engagement.')"><span class="st-arr">→</span>High-spend, low-quality — prioritise</button>
+        <button class="st" onclick="ask('Which suppliers are in high-emission intensity sectors with no reduction target? List them as transition risks.')"><span class="st-arr">→</span>Highest transition risk suppliers</button>
+        <button class="st" onclick="ask('Draft a professional follow-up email for suppliers who have not responded to the questionnaire. Reference CSRD Category 1 requirements and the DEFRA spend-based estimate we will use in the absence of their data.')"><span class="st-arr">→</span>Draft follow-up email (with DEFRA warning)</button>
+        <button class="st" onclick="ask('Summarise data quality across my supplier base — what percentage is activity-based, spend-based estimate, or missing?')"><span class="st-arr">→</span>Data quality breakdown</button>
+      </div>
+    </div>
+
+    <!-- Chat -->
+    <div class="p-chat">
+      <div class="msgs" id="msgs">
+        <div class="welcome" id="welcome">
+          <div class="w-leaf">✦</div>
+          <div class="w-title">Ready to analyse</div>
+          <p class="w-sub">Your data is loaded with DEFRA EEIO 2023 factors active. Ask anything about your Scope 3 portfolio — or use the suggestions on the left.</p>
+        </div>
+      </div>
+      <div class="i-bar">
+        <textarea class="i-in" id="iIn" placeholder="Ask about your supplier emissions data…" rows="1"
+          onkeydown="hk(event)" oninput="ah(this)"></textarea>
+        <button class="i-btn" id="iBtn" onclick="send()">↑</button>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="p-right" id="pRight">
+      <div class="r-empty" id="rEmpty">Supplier cards and DEFRA<br>estimates appear here</div>
+      <div id="rCards" style="display:none"></div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── BACKEND CONFIG ───────────────────────────
+// Point this to your Cloudflare Worker URL
+// Your API key lives in the Worker — not here
+const WORKER_URL = "https://nusaeco-proxy.gmittran.workers.dev";
+// ─────────────────────────────────────────────
+
+// ── DEFRA EEIO 2023 Supply Chain Emission Factors ──
+// Source: DESNZ/DEFRA Greenhouse Gas Conversion Factors 2023
+// Annex 13 — Supply chain (scope 3) emission factors by SIC category
+// Units: kgCO2e per £ of spend (purchasers' prices, 2023 real terms)
+// Method: UK input-output model, GHG Protocol Tier 3 spend-based
+const DEFRA_EEIO = [
+  { sector: "Agriculture", sic: "A", factor: 2.09, note: "Farming, horticulture, livestock" },
+  { sector: "Forestry & logging", sic: "02", factor: 0.54, note: "Timber, wood harvesting" },
+  { sector: "Mining & quarrying", sic: "B", factor: 1.87, note: "Coal, oil, gas, stone extraction" },
+  { sector: "Food & beverages", sic: "10-11", factor: 1.24, note: "Food manufacturing, drinks" },
+  { sector: "Textiles & apparel", sic: "13-15", factor: 0.87, note: "Clothing, fabric, leather" },
+  { sector: "Wood & paper products", sic: "16-17", factor: 0.93, note: "Timber products, paper, packaging" },
+  { sector: "Printing", sic: "18", factor: 0.72, note: "Print media, publishing" },
+  { sector: "Chemicals", sic: "20", factor: 1.62, note: "Chemicals, dyes, industrial gases" },
+  { sector: "Pharmaceuticals", sic: "21", factor: 0.82, note: "Medicines, medical chemicals" },
+  { sector: "Rubber & plastics", sic: "22", factor: 1.14, note: "Plastic goods, rubber products" },
+  { sector: "Non-metallic minerals", sic: "23", factor: 2.31, note: "Cement, glass, ceramics, concrete" },
+  { sector: "Basic metals", sic: "24", factor: 2.47, note: "Steel, iron, aluminium production" },
+  { sector: "Fabricated metal products", sic: "25", factor: 1.18, note: "Structural metal, tools, hardware" },
+  { sector: "Electronics & electrical", sic: "26-27", factor: 0.71, note: "IT hardware, components, wiring" },
+  { sector: "Machinery & equipment", sic: "28", factor: 0.85, note: "Industrial machinery, HVAC" },
+  { sector: "Motor vehicles", sic: "29", factor: 0.96, note: "Cars, trucks, automotive parts" },
+  { sector: "Other manufacturing", sic: "30-33", factor: 0.79, note: "Aerospace, furniture, other mfg" },
+  { sector: "Utilities — electricity", sic: "35.1", factor: 0.21, note: "Grid electricity supply (kWh basis preferred)" },
+  { sector: "Utilities — gas & water", sic: "35.2-36", factor: 0.41, note: "Gas supply, water services" },
+  { sector: "Waste management", sic: "38-39", factor: 0.68, note: "Waste collection, treatment, recycling" },
+  { sector: "Construction", sic: "F", factor: 0.95, note: "Building, civil engineering, fit-out" },
+  { sector: "Wholesale & retail trade", sic: "G", factor: 0.46, note: "Distribution, retail, wholesale" },
+  { sector: "Logistics & transport — road", sic: "49", factor: 0.89, note: "Road haulage, couriers, distribution" },
+  { sector: "Logistics & transport — rail", sic: "49.1", factor: 0.11, note: "Rail freight and passenger" },
+  { sector: "Logistics & transport — air", sic: "51", factor: 1.87, note: "Air freight, aviation" },
+  { sector: "Logistics & transport — sea", sic: "50", factor: 0.62, note: "Shipping, maritime freight" },
+  { sector: "Accommodation & food service", sic: "I", factor: 0.81, note: "Hotels, catering, events" },
+  { sector: "ICT & telecoms", sic: "J", factor: 0.28, note: "Software, SaaS, telecoms, IT services" },
+  { sector: "Financial services", sic: "K", factor: 0.17, note: "Banking, insurance, investment" },
+  { sector: "Real estate", sic: "L", factor: 0.31, note: "Property management, leasing" },
+  { sector: "Professional services", sic: "M", factor: 0.22, note: "Legal, accounting, consulting, R&D" },
+  { sector: "Administrative services", sic: "N", factor: 0.34, note: "Staffing, facilities, office services" },
+  { sector: "Education", sic: "P", factor: 0.29, note: "Training, universities, schools" },
+  { sector: "Health & social care", sic: "Q", factor: 0.36, note: "Healthcare, medical devices, care" },
+  { sector: "Arts & recreation", sic: "R", factor: 0.44, note: "Events, media, sport, entertainment" },
+  { sector: "Other services", sic: "S-U", factor: 0.38, note: "Miscellaneous services" },
+];
+
+// Sector matching — maps CSV sector values to DEFRA factors
+function matchFactor(sector) {
+  if (!sector) return null;
+  const s = sector.toLowerCase();
+  const matches = [
+    [['manufactur', 'fabricat', 'casting', 'components', 'parts', 'engineering'], 'Fabricated metal products'],
+    [['steel', 'iron', 'alumin', 'metal produc'], 'Basic metals'],
+    [['chemical'], 'Chemicals'],
+    [['plastic', 'rubber', 'polymer'], 'Rubber & plastics'],
+    [['electronic', 'it ', 'tech', 'software', 'hardware', 'compute', 'digital'], 'Electronics & electrical'],
+    [['logistic', 'haulage', 'transport', 'freight', 'courier', 'delivery', 'fleet'], 'Logistics & transport — road'],
+    [['construction', 'building', 'civil'], 'Construction'],
+    [['professional service', 'consulting', 'advisory', 'legal', 'accounting'], 'Professional services'],
+    [['food', 'beverage', 'agriculture', 'farm'], 'Food & beverages'],
+    [['retail', 'wholesale', 'distribution'], 'Wholesale & retail trade'],
+    [['packaging', 'paper', 'wood', 'timber', 'pulp'], 'Wood & paper products'],
+    [['textile', 'apparel', 'clothing', 'fashion'], 'Textiles & apparel'],
+    [['pharma', 'medicine', 'drug'], 'Pharmaceuticals'],
+    [['energy', 'utility', 'power', 'electric'], 'Utilities — electricity'],
+    [['waste', 'recycl', 'environmental'], 'Waste management'],
+    [['health', 'medical', 'care'], 'Health & social care'],
+    [['ict', 'telecom', 'comms', 'saas', 'cloud'], 'ICT & telecoms'],
+    [['financial', 'banking', 'insurance'], 'Financial services'],
+    [['mineral', 'cement', 'glass', 'ceramic', 'concrete'], 'Non-metallic minerals'],
+    [['machin', 'equipment', 'hvac'], 'Machinery & equipment'],
+  ];
+  for (const [keywords, sectorName] of matches) {
+    if (keywords.some(k => s.includes(k))) {
+      return DEFRA_EEIO.find(d => d.sector === sectorName);
+    }
+  }
+  return DEFRA_EEIO.find(d => d.sector === 'Other services');
+}
+
+// ── State ──
+let csv = [], hdrs = [], hist = [], busy = false;
+
+// ── Smart number parser — strips £ $ € , spaces ──
+function parseNum(val) {
+  if (!val && val !== 0) return 0;
+  return parseFloat(String(val).replace(/[£$€\s,]/g, '')) || 0;
+}
+
+// ── Smart column finder — matches common variations ──
+function findCol(row, candidates) {
+  const keys = Object.keys(row).map(k => k.toLowerCase().trim());
+  for (const c of candidates) {
+    const match = keys.find(k => k.includes(c));
+    if (match) return Object.keys(row).find(k => k.toLowerCase().trim() === match);
+  }
+  return null;
+}
+
+// Column aliases — NusaEco recognises all these variations
+const COL = {
+  name:      ['supplier_name','supplier','company','vendor','name','organisation','organization'],
+  spend:     ['annual_spend_gbp','spend_gbp','annual_spend','spend','budget','contract_value','value','cost','purchase'],
+  sector:    ['sector','industry','category','type','sic','business_type'],
+  scope1:    ['scope1_tco2e','scope1','scope_1','s1','direct_emissions','scope1_emissions'],
+  scope2:    ['scope2_tco2e','scope2','scope_2','s2','indirect_emissions','scope2_emissions'],
+  scope3:    ['scope3_tco2e','scope3','scope_3','s3','value_chain','scope3_emissions'],
+  responded: ['questionnaire_responded','responded','response','replied','questionnaire_reply'],
+  quality:   ['data_quality_score','quality_score','data_quality','quality','dq_score'],
+  target:    ['has_reduction_target','reduction_target','net_zero_target','target','commitment'],
+  verified:  ['verified','third_party_verified','assured','assurance','audited'],
+  year:      ['reporting_year','year','report_year','data_year','fy'],
+  country:   ['country','location','region','geography'],
+  notes:     ['notes','note','comments','comment','remarks'],
+};
+
+function getVal(row, colKey) {
+  const col = findCol(row, COL[colKey] || [colKey]);
+  return col ? row[col] : '';
+}
+
+function getSpend(row) {
+  const col = findCol(row, COL.spend);
+  return col ? parseNum(row[col]) : 0;
+}
+
+// ── CSV parse ──
+function parseCSV(txt) {
+  const lines = txt.trim().split(/\r?\n/);
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g,''));
+  const rows = lines.slice(1).filter(l=>l.trim()).map(line => {
+    const vals=[]; let cur='', inQ=false;
+    for (let i=0;i<line.length;i++) {
+      const c=line[i];
+      if (c==='"') inQ=!inQ;
+      else if (c===','&&!inQ){vals.push(cur.trim());cur='';}
+      else cur+=c;
+    }
+    vals.push(cur.trim());
+    const o={};
+    headers.forEach((h,i)=>{o[h]=(vals[i]||'').replace(/^"|"$/g,'');});
+    return o;
+  });
+  return {headers,rows};
+}
+
+function loadF(file) {
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const {headers,rows} = parseCSV(e.target.result);
+    hdrs=headers; csv=rows;
+    document.getElementById('uIcon').textContent='✓';
+    document.getElementById('uIcon').style.cssText='background:#e6f5ec;color:#2a6b42';
+    document.getElementById('uTitle').textContent=file.name;
+    document.getElementById('uSub').textContent=`${rows.length} suppliers · ${headers.length} columns`;
+    document.getElementById('startBtn').disabled=false;
+    document.getElementById('startLbl').textContent=`Analyse ${rows.length} suppliers →`;
+  };
+  reader.readAsText(file);
+}
+
+function dv(e){e.preventDefault();document.getElementById('dropZone').classList.add('over');}
+function dl(){document.getElementById('dropZone').classList.remove('over');}
+function df(e){e.preventDefault();dl();loadF(e.dataTransfer.files[0]);}
+
+// ── Launch ──
+function launchApp() {
+  if(!csv.length) return;
+  document.getElementById('landing').style.display='none';
+  document.getElementById('app').style.display='flex';
+  populateApp();
+}
+
+function populateApp() {
+  const n=csv.length;
+  const resp=csv.filter(r=>getVal(r,'responded')?.toLowerCase()==='yes').length;
+  const withData=csv.filter(r=>getVal(r,'scope1')||getVal(r,'scope2')||getVal(r,'scope3')).length;
+  const verif=csv.filter(r=>getVal(r,'verified')?.toLowerCase()==='yes').length;
+  const spend=csv.reduce((s,r)=>s+getSpend(r),0);
+  const quals=csv.filter(r=>getVal(r,'quality')).map(r=>parseFloat(getVal(r,'quality')));
+  const avgQ=quals.length?Math.round(quals.reduce((a,b)=>a+b,0)/quals.length):0;
+
+  document.getElementById('dsLbl').textContent=`${n} suppliers`;
+  document.getElementById('sN').textContent=n;
+  document.getElementById('sS').textContent='£'+(spend/1e6).toFixed(1)+'m';
+  document.getElementById('sR').textContent=Math.round(resp/n*100)+'%';
+  document.getElementById('sQ').textContent=avgQ||'—';
+
+  const rp=Math.round(resp/n*100), dp=Math.round(withData/n*100), vp=Math.round(verif/n*100);
+  document.getElementById('cfR').style.width=rp+'%';
+  document.getElementById('cfD').style.width=dp+'%';
+  document.getElementById('cfV').style.width=vp+'%';
+  document.getElementById('cvR').textContent=rp+'%';
+  document.getElementById('cvD').textContent=dp+'%';
+  document.getElementById('cvV').textContent=vp+'%';
+
+  // Right panel — top suppliers + DEFRA table
+  document.getElementById('rEmpty').style.display='none';
+  const rc=document.getElementById('rCards');
+  rc.style.display='block';
+
+  const sorted=[...csv].sort((a,b)=>getSpend(b)-getSpend(a)).slice(0,7);
+
+  const supCards = sorted.map(r=>{
+    const qs=parseInt(getVal(r,'quality'))||0;
+    const qc=qs>=65?'bg':qs>=40?'ba':'br';
+    const res=getVal(r,'responded')?.toLowerCase()==='yes';
+    const sp=getSpend(r);
+    const s1=parseNum(getVal(r,'scope1')), s2=parseNum(getVal(r,'scope2')), s3=parseNum(getVal(r,'scope3'));
+    const tot=s1+s2+s3;
+    const factor=matchFactor(getVal(r,'sector'));
+    const est=factor&&sp>0?(sp*factor.factor/1000):null;
+    const name=getVal(r,'name')||'Unknown supplier';
+    return `<div class="sup-card">
+      <div class="sup-name">${name}</div>
+      <div class="sup-sect">${getVal(r,'sector')||'Sector not specified'}</div>
+      <div class="sup-row"><span>Spend</span><span class="sup-val">${sp>0?'£'+(sp/1000).toFixed(0)+'k':'No spend data'}</span></div>
+      ${tot>0?`<div class="sup-row"><span>Reported</span><span class="sup-val">${tot.toLocaleString('en-GB',{maximumFractionDigits:0})} tCO₂e</span></div>`:''}
+      ${!tot&&est?`<div class="sup-row"><span>DEFRA est.</span><span class="sup-val" style="color:var(--blue)">${est.toFixed(1)} tCO₂e</span></div>`:''}
+      ${!tot&&!est?`<div class="sup-row"><span style="color:var(--amber);font-size:10px">Add spend + sector for DEFRA estimate</span></div>`:''}
+      <div class="sup-row" style="margin-top:4px">
+        <span class="bdg ${qs>0?qc:'br'}">${qs>0?'Q: '+qs:'No score'}</span>
+        <span class="bdg ${res?'bg':'br'}">${res?'Responded':'No response'}</span>
+      </div>
+    </div>`;
+  }).join('');
+
+  // DEFRA factor quick-reference
+  const defraRows = DEFRA_EEIO.slice(0,16).map(d=>
+    `<tr><td>${d.sector}</td><td>${d.factor}</td></tr>`
+  ).join('');
+
+  rc.innerHTML = `
+    <div class="r-sec">
+      <div class="r-lbl">Top suppliers by spend</div>
+      ${supCards}
+    </div>
+    <div class="r-sec">
+      <div class="r-lbl">DEFRA EEIO 2023 — key sectors</div>
+      <table class="defra-table">
+        <thead><tr><th>Sector</th><th>kgCO₂e/£</th></tr></thead>
+        <tbody>${defraRows}</tbody>
+      </table>
+      <div style="font-size:9px;color:var(--ink-faint);margin-top:6px;line-height:1.5;padding:0 2px">Source: DESNZ/DEFRA GHG Conversion Factors 2023, Annex 13. GHG Protocol Tier 3 spend-based method.</div>
+    </div>`;
+
+  // Opening message
+  const totalKnown = csv.reduce((s,r)=>s+parseNum(getVal(r,'scope1'))+parseNum(getVal(r,'scope2'))+parseNum(getVal(r,'scope3')),0);
+  const noData = csv.filter(r=>!getVal(r,'scope1')&&!getVal(r,'scope2')&&!getVal(r,'scope3'));
+  const defraEst = noData.reduce((s,r)=>{
+    const sp=getSpend(r);
+    const f=matchFactor(getVal(r,'sector'));
+    return s+(f&&sp>0?sp*f.factor/1000:0);
+  },0);
+  const noSpendNoData = csv.filter(r=>!getVal(r,'scope1')&&!getVal(r,'scope2')&&!getVal(r,'scope3')&&getSpend(r)===0).length;
+
+  addMsg('ai',
+    `Dataset loaded — ${n} suppliers${spend>0?', £'+(spend/1e3).toFixed(0)+'k total annual spend':' (no spend column detected)'}.\n\n`+
+    `Portfolio snapshot:\n`+
+    `• Response rate: ${Math.round(resp/n*100)}% (${n-resp} yet to respond)\n`+
+    `• Known reported emissions: ${totalKnown>0?(totalKnown/1000).toFixed(1)+'k tCO₂e across '+withData+' suppliers':'None reported yet'}\n`+
+    `• Emissions data gap: ${noData.length} suppliers with no reported figures\n`+
+    (defraEst>0?`• DEFRA EEIO estimated gap: ~${defraEst.toFixed(0)} tCO₂e (spend-based, DESNZ/DEFRA 2023)\n`:'')+
+    (noSpendNoData>0?`• ${noSpendNoData} suppliers have neither spend nor emissions data — I'll flag these\n`:'')+
+    `\nNote: DEFRA estimates are indicative (GHG Protocol Tier 3). Replace with supplier data before formal reporting.\n\n`+
+    `Ask me anything — or use the suggestions on the left to get started.`
+  );
+}
+
+// ── Chat ──
+function ask(q){document.getElementById('iIn').value=q;send();}
+function hk(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send();}}
+function ah(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,110)+'px';}
+
+async function send() {
+  const input=document.getElementById('iIn');
+  const q=input.value.trim();
+  if(!q||busy) return;
+
+  if(WORKER_URL==='YOUR_WORKER_URL_HERE'){
+    showToast('Set your Cloudflare Worker URL in the HTML file to enable AI responses');
+    return;
+  }
+
+  busy=true; input.value=''; input.style.height='auto';
+  document.getElementById('iBtn').disabled=true;
+  document.getElementById('welcome').style.display='none';
+
+  addMsg('user',q);
+  hist.push({role:'user',content:q});
+
+  const tid=addTyping();
+
+  // Build DEFRA context string
+  const defraContext = DEFRA_EEIO.map(d=>
+    `${d.sector} (SIC ${d.sic}): ${d.factor} kgCO2e per £ spend — ${d.note}`
+  ).join('\n');
+
+  // Build supplier context — smart column detection + DEFRA pre-calc
+  const supplierContext = csv.map((r,i)=>{
+    const sp=getSpend(r);
+    const s1=parseNum(getVal(r,'scope1')), s2=parseNum(getVal(r,'scope2')), s3=parseNum(getVal(r,'scope3'));
+    const hasEmissions=s1>0||s2>0||s3>0;
+    const sector=getVal(r,'sector');
+    let defraLine='';
+    if(!hasEmissions&&sp>0){
+      const f=matchFactor(sector);
+      if(f) defraLine=`, DEFRA_EEIO_estimate: ${(sp*f.factor/1000).toFixed(1)} tCO2e using ${f.sector} factor ${f.factor} kgCO2e/£ (DESNZ/DEFRA 2023 Annex 13, Tier 3 indicative)`;
+      else defraLine=`, DEFRA_EEIO_estimate: unavailable (sector not specified or unrecognised)`;
+    } else if(!hasEmissions&&sp===0){
+      defraLine=`, DEFRA_EEIO_estimate: unavailable (no spend data)`;
+    }
+    const parts=Object.entries(r).filter(([,v])=>v).map(([k,v])=>`${k}: ${v}`).join(', ');
+    return `[${i+1}] ${parts}${defraLine}`;
+  }).join('\n');
+
+  const sys = `You are NusaEco, a specialist procurement sustainability co-pilot built for UK organisations. You help procurement analysts understand their Scope 3 emissions, prioritise supplier engagement, and meet GHG Protocol and CSRD requirements.
+
+IMPORTANT: You have access to the DEFRA EEIO 2023 supply chain emission factors (DESNZ/DEFRA Greenhouse Gas Conversion Factors 2023, Annex 13). When estimating emissions for suppliers with no reported data, ALWAYS:
+1. Use the DEFRA factor for their sector from the table below
+2. Show the calculation: spend × factor / 1000 = tCO2e
+3. Cite the source: "DESNZ/DEFRA 2023 Annex 13, [sector name], [factor] kgCO2e/£"
+4. Label it clearly as a spend-based estimate (GHG Protocol Tier 3)
+
+This makes your estimates auditable — a procurement analyst can cite the exact factor and methodology to an auditor.
+
+DEFRA EEIO 2023 SUPPLY CHAIN EMISSION FACTORS:
+${defraContext}
+
+Methodology notes:
+- Factors are in kgCO2e per £ of spend at purchasers' prices (inc. VAT), 2023 real terms
+- Based on UK input-output model, covering upstream supply chain (Scope 2+3 of GHG Protocol)
+- GHG Protocol Tier 3 spend-based method — valid where primary data unavailable
+- More granular data (actual fuel use, kWh) should override these factors where available
+
+Regulatory context:
+- CSRD: Scope 3 Category 1 mandatory for large companies from FY2024, with audit trail
+- GHG Protocol: Scope 1=direct, Scope 2=electricity indirect, Scope 3=value chain (15 categories)  
+- SBTi = gold standard supplier reduction targets (1.5°C Science Based Targets)
+- Data quality: 80+=verified activity-based; 60-79=self-reported activity; 40-59=estimated; <40=insufficient
+
+Answer style: direct, specific, professional. Cite supplier names and numbers. Show DEFRA calculations clearly when estimating gaps. No unnecessary preamble.
+
+SUPPLIER DATASET (includes pre-calculated DEFRA estimates where applicable):
+${supplierContext}`;
+
+  try {
+    const res=await fetch(WORKER_URL,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({max_tokens:1500,system:sys,messages:hist})
+    });
+    removeTyping(tid);
+
+    const data=await res.json();
+
+    // ── Limit reached ──────────────────────────────
+    if(res.status===429&&data.limit_reached){
+      showLimitModal(data);
+      return;
+    }
+
+    if(!res.ok){
+      const msg=data.error?.message||`HTTP ${res.status}`;
+      throw new Error(`API error: ${msg}`);
+    }
+
+    const reply=data.content[0].text;
+    hist.push({role:'assistant',content:reply});
+    if(hist.length>20) hist=hist.slice(-20);
+    addMsg('ai',reply);
+
+    // ── Show remaining questions counter ──────────
+    if(data._nusaeco_usage){
+      updateUsageBar(data._nusaeco_usage);
+    }
+
+  } catch(err) {
+    removeTyping(tid);
+    addMsg('ai',`Something went wrong: ${err.message}`);
+  } finally {
+    busy=false;
+    document.getElementById('iBtn').disabled=false;
+  }
+}
+
+// ── Helpers ──
+function updateUsageBar(usage) {
+  const wrap = document.getElementById('usageBarWrap');
+  const fill = document.getElementById('usageFill');
+  const text = document.getElementById('usageText');
+  wrap.style.display = 'block';
+  const pct = Math.round((usage.questions_used / usage.daily_limit) * 100);
+  fill.style.width = pct + '%';
+  fill.style.background = pct >= 80 ? 'var(--red)' : pct >= 60 ? 'var(--amber)' : 'var(--leaf)';
+  text.textContent = `${usage.questions_used} of ${usage.daily_limit}`;
+  // Warn at 1 remaining
+  if (usage.questions_remaining === 1) {
+    showToast('1 free question remaining today');
+  }
+}
+
+function showLimitModal(data) {
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'limitModal';
+  overlay.innerHTML = `
+    <div class="modal-box">
+      <div class="modal-icon">◎</div>
+      <div class="modal-title">You've reached today's limit</div>
+      <div class="modal-body">
+        You've used your ${data.daily_limit} free questions for today.
+        NusaEco is a beta tool and free access is limited to keep costs sustainable.<br><br>
+        To discuss unlimited access for your organisation, or if you're a sustainability
+        consultant who'd like to use NusaEco with clients, get in touch.
+      </div>
+      <div class="modal-reset">⟳ Your free questions reset at midnight UTC</div>
+      <button class="modal-cta" onclick="contactUs()">Get in touch about full access</button>
+      <button class="modal-dismiss" onclick="dismissModal()">Come back tomorrow</button>
+    </div>`;
+  document.body.appendChild(overlay);
+}
+
+function contactUs() {
+  // Opens email — replace with your actual email
+  window.location.href = 'mailto:hello@nusaeco.com?subject=NusaEco full access&body=Hi, I would like to discuss full access to NusaEco for my organisation.';
+}
+
+function dismissModal() {
+  document.getElementById('limitModal')?.remove();
+}
+function addMsg(role,text){
+  const c=document.getElementById('msgs');
+  const d=document.createElement('div');
+  d.className=`msg ${role==='user'?'user':'ai'}`;
+  d.innerHTML=`<div class="msg-role ${role==='user'?'user':'ai'}">${role==='user'?'You':'NusaEco'}</div><div class="msg-body">${esc(text)}</div>`;
+  c.appendChild(d); c.scrollTop=c.scrollHeight;
+}
+function addTyping(){
+  const c=document.getElementById('msgs');
+  const d=document.createElement('div');
+  const id='t'+Date.now(); d.id=id; d.className='typing-w';
+  d.innerHTML=`<div class="msg-role ai">NusaEco</div><div class="typing"><div class="td"></div><div class="td"></div><div class="td"></div></div>`;
+  c.appendChild(d); c.scrollTop=c.scrollHeight; return id;
+}
+function removeTyping(id){document.getElementById(id)?.remove();}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
+function newDs(){
+  csv=[];hdrs=[];hist=[];
+  document.getElementById('app').style.display='none';
+  document.getElementById('landing').style.display='flex';
+  document.getElementById('msgs').innerHTML=`<div class="welcome" id="welcome"><div class="w-leaf">✦</div><div class="w-title">Ready to analyse</div><p class="w-sub">Your data is loaded with DEFRA EEIO 2023 factors active.</p></div>`;
+  document.getElementById('uIcon').textContent='↑';
+  document.getElementById('uIcon').style.cssText='';
+  document.getElementById('uTitle').textContent='Drop your CSV here';
+  document.getElementById('uSub').textContent='or click to browse · .csv files only';
+  document.getElementById('startBtn').disabled=true;
+  document.getElementById('startLbl').textContent='Upload a CSV to continue';
+}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3500);}
+</script>
+</body>
+</html>
