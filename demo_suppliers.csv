@@ -1,0 +1,21 @@
+supplier_name,sector,country,annual_spend_gbp,scope1_tco2e,scope2_tco2e,scope3_tco2e,reporting_year,questionnaire_responded,questionnaire_sent_date,questionnaire_response_date,has_reduction_target,reduction_target_year,verified,ghg_protocol_category,notes
+Tectonic Steel Components,Manufacturing,UK,648000,12450,3200,890,2023,Yes,15-01-24,03-02-24,Yes,2035,Yes,Category 1,CDP reporter. Limited assurance by BSI. Scope 3 cat 4 only.
+Greenfield Packaging Ltd,Manufacturing,UK,182000,850,410,,2023,Yes,15-01-24,28-02-24,No,,No,Category 1,Scope 3 not yet calculated. Planning for 2024.
+Swift Logistics & Haulage,Logistics & transport,UK,94500,900,18,,2023,Yes,15-01-24,10-03-24,No,,No,Category 4,Refrigerant data provided separately. Fleet diesel tracked.
+Apex Chemicals UK,Chemicals,UK,310000,4200,1800,2100,2023,Yes,15-01-24,15-02-24,Yes,2030,No,Category 1,SBTi committed. Scope 3 spend-based estimate only.
+Meridian Electronics,IT & electronics,UK,275000,,,, ,No,15-01-24,,No,,No,Category 1,No response received. High spend priority for follow-up.
+BrightStar Facilities,Professional services,UK,58000,120,340,,2023,Yes,15-01-24,01-04-24,No,,No,Category 1,Only electricity reported. Gas heating not included.
+Northlands Timber,Construction materials,UK,421000,3100,720,1200,2023,Yes,15-01-24,20-02-24,Yes,2040,No,Category 1,FSC certified. Scope 3 includes upstream forestry estimate.
+ProFleet Transport,Logistics & transport,UK,76000,680,,,2022,Yes,15-01-24,25-03-24,No,,No,Category 4,2022 data only. No 2023 report available yet.
+Solaris Energy Systems,Energy & utilities,UK,195000,280,0,4500,2023,Yes,15-01-24,30-01-24,Yes,2028,Yes,Category 1,Excellent data. RE100 member. Scope 3 cat 11 included.
+Hargreaves Food Co,Agriculture & food,UK,88000,1450,390,,2023,Yes,15-01-24,15-03-24,No,,No,Category 1,Refrigeration emissions included in Scope 1. Scope 3 not started.
+TechForge Manufacturing,Manufacturing,Germany,512000,8900,2100,3400,2023,Yes,15-01-24,10-02-24,Yes,2035,No,Category 1,GHG Protocol aligned. Scope 3 cat 1+4+11.
+GreenRoute Logistics,Logistics & transport,Netherlands,143000,1200,85,,2023,Yes,15-01-24,28-02-24,No,,No,Category 4,EV fleet transition underway. 15% electric by 2024.
+Precision Parts Ltd,Manufacturing,UK,367000,,,,,No,15-01-24,,No,,No,Category 1,Two chasers sent. Contact unresponsive.
+Atlas Building Materials,Construction materials,UK,289000,5600,1400,,2023,Yes,15-01-24,05-04-24,No,,No,Category 1,Concrete production Scope 1 dominant. Scope 3 not measured.
+ClearWave IT Services,IT & electronics,UK,134000,45,890,,2023,Yes,15-01-24,01-03-24,Yes,2030,No,Category 1,SBTi near-term target set. Data centre PUE 1.4.
+Vanguard Retail Supplies,Retail & distribution,UK,220000,,,,,No,15-01-24,,No,,No,Category 1,No response. Spend significant — escalate to account manager.
+Ironbridge Castings,Manufacturing,UK,178000,6700,890,,2022,Yes,15-01-24,20-03-24,No,,No,Category 1,2022 data. Very energy intensive process. No reduction plan.
+EcoFibre Textiles,Manufacturing,India,95000,1800,640,890,2023,Yes,15-01-24,25-02-24,No,,No,Category 1,GOTS certified. GHG data self-reported against GHG Protocol.
+Nordic Paper Supplies,Agriculture & food,Sweden,162000,420,0,1100,2023,Yes,15-01-24,05-02-24,Yes,2030,Yes,Category 1,ISO 14064-1 verified. 100% renewable electricity.
+Castleford Engineering,Manufacturing,UK,445000,9200,2800,,2023,Yes,15-01-24,30-03-24,No,,No,Category 1,Largest UK supplier. Scope 3 gap is significant risk for CSRD.
